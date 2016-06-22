@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from localflavor.us.models import USStateField
 
 
 # Create your models here.
@@ -72,7 +73,7 @@ class Person(models.Model):
     birth_date = models.DateField()
     address = models.CharField(max_length=100)
     city = models.CharField(max_length=50)
-    state = USStateField() # Yes, this is U.S.-centric...
+    state = USStateField()  # Yes, this is U.S.-centric...
 
     def baby_boomer_status(self):
         "Returns the person's baby-boomer status."
@@ -90,4 +91,5 @@ class Person(models.Model):
     def _get_full_name(self):
         "Returns the person's full name."
         return u'%s %s' % (self.first_name, self.last_name)
+
     full_name = property(_get_full_name)
