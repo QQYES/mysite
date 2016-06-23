@@ -17,6 +17,7 @@ Including another URLconf
 from django.conf.urls import url, patterns
 from django.contrib import admin
 from django.views.generic import TemplateView
+from books.views import about_pages
 
 # from mysite.views import hello, current_datetime, hours_ahead, display_meta
 # from books.views import search
@@ -38,7 +39,8 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
 ]
 
-urlpatterns += patterns('', (r'^about/$', TemplateView.as_view(template_name="about.html")), )
+urlpatterns += patterns('', (r'^about/$', TemplateView.as_view(template_name="about.html")),
+                        (r'^about/(\w+)/$', about_pages), )
 
 urlpatterns += patterns('mysite.views',
                         url(r'^hello/$', 'hello'),

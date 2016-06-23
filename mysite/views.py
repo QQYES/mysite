@@ -1,6 +1,8 @@
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.http import Http404
+from django.template import TemplateDoesNotExist
+from django.views.generic import TemplateView
 import datetime
 
 
@@ -31,3 +33,10 @@ def display_meta(request):
     for k, v in values:
         html.append('<tr><td>%s</td><td>%s</td></tr>' % (k, v))
     return HttpResponse('<table>%s</table>' % '\n'.join(html))
+
+
+def about_pages(request, page):
+    try:
+        return TemplateView.as_view(request, template='about/%s.html' % page)
+    except TemplateDoesNotExist:
+        raise Http404()
