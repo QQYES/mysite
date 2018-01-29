@@ -17,7 +17,9 @@ Including another URLconf
 from django.conf.urls import url, patterns
 from django.contrib import admin
 from django.views.generic import TemplateView
-from books.views import about_pages
+from django.views.generic import list
+from books.models import Publisher
+from mysite.views import about_pages
 
 # from mysite.views import hello, current_datetime, hours_ahead, display_meta
 # from books.views import search
@@ -38,6 +40,15 @@ from books.views import about_pages
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
 ]
+
+publisher_info = {
+    'queryset': Publisher.objects.all(),
+    'template_name': 'publisher_list_page.html',
+}
+
+urlpatterns += patterns('',
+                        (r'^publishers/$',
+                         list.ListView.as_view(model=Publisher, template_name='publisher_list_page.html')), )
 
 urlpatterns += patterns('', (r'^about/$', TemplateView.as_view(template_name="about.html")),
                         (r'^about/(\w+)/$', about_pages), )
